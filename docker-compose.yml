@@ -1,0 +1,38 @@
+services: 
+
+  web-db: 
+    
+    image: postgres:17.4
+
+    ports:
+      - 5432:5432
+
+    environment:
+      POSTGRES_DB: trabahope_web 
+
+    env_file:
+      - .env
+  
+    volumes:
+      # make the data persistent across container rebuilds
+      - ./data/db-data/:/var/lib/postgresql/data
+
+      # setup script for initializing db tables
+      - ./app/common/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+
+  pgadmin:
+
+    image: dpage/pgadmin4
+
+    ports:
+      - 15433:80
+
+    env_file:
+      - .env
+
+    depends_on:
+      - web-db
+
+    volumes:
+      - ./data/pgadmin-data/:/var/lib/pgadmin
