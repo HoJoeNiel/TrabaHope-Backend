@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Path
-from schema.job import JobCreate, JobResponse, JobUpdate
+from schemas.job import JobCreate, JobResponse, JobUpdate
 from services.job_service import create_job, update_job, delete_job
 from db.database import Database
 from typing import Optional
